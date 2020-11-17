@@ -162,7 +162,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ asset('dashboard/img/user2-160x160.jpg') }}" class="user-image"
                                  alt="User Image">
-                            <span class="hidden-xs">Ahmed Hassan</span>
+                            <span class="hidden-xs">.</span>
                         </a>
                         <ul class="dropdown-menu">
 
@@ -172,7 +172,7 @@
                                      alt="User Image">
 
                                 <p>
-                                    Ahmed Hassan
+{{--                                    {{$user->first_name . ' ' . $user->last_name}}--}}
                                     <small>Member since 2 days</small>
                                 </p>
                             </li>

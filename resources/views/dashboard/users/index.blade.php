@@ -21,7 +21,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('site.users')</h3>
 
-                    <form action="">
+                    <form action="{{route('dashboard.users.index')}}">
                         <div class="row">
                             <div class="col-md-2"></div>
                             <div class="col-md-4">
@@ -66,6 +66,7 @@
                                                 <th>@lang('site.first_name')</th>
                                                 <th>@lang('site.last_name')</th>
                                                 <th>@lang('site.email')</th>
+                                                <th>@lang('site.action')</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -75,14 +76,16 @@
                                                     <td>{{$index + 1}}</td>
                                                     <td>{{$user->first_name}}</td>
                                                     <td>{{$user->last_name}}</td>
+                                                    <td>{{$user->email}}</td>
 
                                                     <td>
-                                                        @if(auth()->user()->hasPermission('edit_users') )
+                                                        @if(auth()->user()->hasPermission('update_users'))
                                                             <a class="btn btn-info"
-                                                               href="{{route('dashboard.users.edit',$user->id)}}">@lang('site.edit')</a>
+                                                               href="{{route('dashboard.users.edit', $user->id)}}"> <i
+                                                                    class="fa fa-edit"></i> @lang('site.edit')</a>
                                                         @else
                                                             <a class="btn btn-info disabled"
-                                                               href="#">@lang('site.edit')</a>
+                                                               href="#"><i class="fa fa-edit"></i>@lang('site.edit')</a>
                                                         @endif
 
 
@@ -95,11 +98,15 @@
                                                                 {{method_field('delete')}}
 
                                                                 <button
-                                                                    class="btn btn-danger">@lang('site.delete')</button>
+                                                                    class="btn btn-danger"><i
+                                                                        class="fa fa-trash"></i> @lang('site.delete')
+                                                                </button>
                                                             </form>
                                                         @else
                                                             <button
-                                                                class="btn btn-danger disabled">@lang('site.delete')</button>
+                                                                class="btn btn-danger disabled"><i
+                                                                    class="fa fa-trash"></i> @lang('site.delete')
+                                                            </button>
                                                         @endif
                                                     </td>
 
@@ -119,10 +126,6 @@
                         </div>
                     </div>
                     <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
                 </form>
             </div>
 
