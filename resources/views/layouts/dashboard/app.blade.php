@@ -172,7 +172,7 @@
                                      alt="User Image">
 
                                 <p>
-{{--                                    {{$user->first_name . ' ' . $user->last_name}}--}}
+                                    {{--                                    {{$user->first_name . ' ' . $user->last_name}}--}}
                                     <small>Member since 2 days</small>
                                 </p>
                             </li>
@@ -238,31 +238,18 @@
             radioClass: 'iradio_minimal-blue'
         });
 
-        $('.delete').click(function (e) {
+        // delete
+        $("#image").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
 
-            var that = $(this)
+                reader.onload = function (e) {
+                    $('.image-preview').attr('src', e.target.result);
+                }
 
-            e.preventDefault();
-
-            var n = new Noty({
-                text: "@lang('site.confirm_delete')",
-                type: "warning",
-                killer: true,
-                buttons: [
-                    Noty.button("@lang('site.yes')", 'btn btn-success mr-2', function () {
-                        that.closest('form').submit();
-                    }),
-
-                    Noty.button("@lang('site.no')", 'btn btn-primary mr-2', function () {
-                        n.close();
-                    })
-                ]
-            });
-
-            n.show();
-
-        });//end of delete
-
+                reader.readAsDataURL(this.files[0]); // convert to base64 string
+            }
+        });
     })
 
 

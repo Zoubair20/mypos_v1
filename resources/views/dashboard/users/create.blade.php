@@ -28,7 +28,7 @@
 
                     @include('partials._errors')
 
-                    <form action="{{route('dashboard.users.store')}}" method="post">
+                    <form action="{{route('dashboard.users.store')}}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
                         {{method_field('post')}}
 
@@ -44,8 +44,19 @@
 
                         <div class="form-group">
                             <label for="">@lang('site.email')</label>
-                            <input type="text" name="email" class="form-control" value="{{old('email')}}">
+                            <input type="email" name="email" class="form-control" value="{{old('email')}}">
                         </div>
+
+                        <div class="form-group">
+                            <label for="">@lang('site.image')</label>
+                            <input type="file" name="image" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">@lang('site.image')</label>
+                            <input type="file" name="image" class="form-control">
+                        </div>
+
 
                         <div class="form-group">
                             <label for="">@lang('site.password')</label>
@@ -67,10 +78,14 @@
 
                             <div class="tab-content">
                                 <div class="tab-pane active" id="users">
-                                    <label> <input type="checkbox" name="permissions[]" value="create_users">@lang('site.create') </label>
-                                    <label> <input type="checkbox" name="permissions[]" value="read_users">@lang('site.read') </label>
-                                    <label> <input type="checkbox" name="permissions[]" value="update_users">@lang('site.update') </label>
-                                    <label> <input type="checkbox" name="permissions[]" value="delete_users">@lang('site.delete') </label>
+                                    <label> <input type="checkbox" name="permissions[]"
+                                                   value="create_users">@lang('site.create') </label>
+                                    <label> <input type="checkbox" name="permissions[]"
+                                                   value="read_users">@lang('site.read') </label>
+                                    <label> <input type="checkbox" name="permissions[]"
+                                                   value="update_users">@lang('site.update') </label>
+                                    <label> <input type="checkbox" name="permissions[]"
+                                                   value="delete_users">@lang('site.delete') </label>
                                 </div>
                             </div>
 
