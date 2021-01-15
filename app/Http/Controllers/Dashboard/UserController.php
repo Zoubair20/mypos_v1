@@ -107,7 +107,21 @@ class UserController extends Controller
             'email' => 'required',
         ]);
 
-        $request_data = $request->except('permissions');
+        $request_data = $request->except('permissions','image');
+
+        if ($request->image) {
+           if ($user->image != 'default.png'){
+
+               Image::make($request->image)
+                   ->resize(300, null, function ($constraint) {
+                       $constraint->aspectRatio();
+                   })
+                   ->save(public_path('uploads/user_images/' . $request->image->hashName()));
+
+               $request_data['image'] = $request->image->hashName();
+
+           }
+        }
 
         $user->update($request_data);
         $user->syncPermissions($request->permissions);

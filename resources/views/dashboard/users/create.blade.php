@@ -49,12 +49,11 @@
 
                         <div class="form-group">
                             <label for="">@lang('site.image')</label>
-                            <input type="file" name="image" class="form-control">
+                            <input type="file" name="image" class="form-control image">
                         </div>
 
                         <div class="form-group">
-                            <label for="">@lang('site.image')</label>
-                            <input type="file" name="image" class="form-control">
+                            <img src="{{asset('uploads/user_images/default.png')}}" style="width: 100px" alt="" class="img-thumbnail image-preview">
                         </div>
 
 
