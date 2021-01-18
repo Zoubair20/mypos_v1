@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
@@ -62,8 +63,10 @@ class UserController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
+            'image' => 'image',
             'password' => 'required|confirmed',
+            'permissions' => 'required|min:1',
         ]);
 
         $request_data = $request->except('password', 'password_confirmation', 'permissions', 'image');
@@ -104,7 +107,9 @@ class UserController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => ['required', Rule::unique('users')->ignore($user->id),],
+            'image' => 'image',
+            'permissions' => 'required|min:1',
         ]);
 
         $request_data = $request->except('permissions','image');
@@ -112,15 +117,16 @@ class UserController extends Controller
         if ($request->image) {
            if ($user->image != 'default.png'){
 
-               Image::make($request->image)
-                   ->resize(300, null, function ($constraint) {
-                       $constraint->aspectRatio();
-                   })
-                   ->save(public_path('uploads/user_images/' . $request->image->hashName()));
-
-               $request_data['image'] = $request->image->hashName();
+               Storage::disk('public_uploads')->delete('/user_images/' . $user->image);
 
            }
+            Image::make($request->image)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
+
+            $request_data['image'] = $request->image->hashName();
         }
 
         $user->update($request_data);
